@@ -98,7 +98,7 @@ $jugadores = [
 $promedio = 0;
 
 foreach ($jugadores as $jugador => $datos) {
-    strval($promedio += $datos['puntuacion']);
+    $promedio += $datos['puntuacion'];
 }
 echo "El promedio de puntuación de todos los jugadores es: " . $promedio / count($jugadores) . "<br>" . "<br>";
 
@@ -199,10 +199,7 @@ $contar = array_reduce($alumnos, function ($carry,  $materias) {
     return $carry;
 }, ['aprobados' => 0, 'reprobados' => 0]);
 
-$alumnosAprobados = function ($carry, $calificacionAlumno) {
-    echo $calificacionAlumno;
-    return $carry + $calificacionAlumno;
-};
+
 
 echo "<br>";
 echo "Total de aprobados: " . $contar['aprobados'] . "<br>";

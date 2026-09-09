@@ -164,7 +164,6 @@ $alumnos = [
 ];
 
 
-
 foreach ($alumnos as $alumno => $materias) {
 
     $calificacionAlumno = 0;
@@ -184,8 +183,138 @@ foreach ($alumnos as $alumno => $materias) {
     } else {
         echo $alumno . ": reprobado" . "<br>";
     }
-
-    /*   $alumnosAprobados = function ($carry, $) {}; */
-
-    // array_reduce($alumnos,);
 }
+
+$contar = array_reduce($alumnos, function ($carry,  $materias) {
+    $suma = array_sum(array_column($materias, 'calificación'));
+    $promedio = $suma / count($materias);
+
+    // Evaluamos la calificación y sumamos al acumulador
+    if ($promedio >= 70) {
+        $carry['aprobados']++;
+    } else {
+        $carry['reprobados']++;
+    }
+
+    return $carry;
+}, ['aprobados' => 0, 'reprobados' => 0]);
+
+$alumnosAprobados = function ($carry, $calificacionAlumno) {
+    echo $calificacionAlumno;
+    return $carry + $calificacionAlumno;
+};
+
+echo "<br>";
+echo "Total de aprobados: " . $contar['aprobados'] . "<br>";
+echo "Total de reprobados: " . $contar['reprobados'] . "<br>" . "<br>";
+
+
+// Ejercicio 3 
+$mascotas = [
+    [
+        'nombre' => 'Bombón',
+        'especie'  => 'Perro',
+        'edad' => 4,
+    ],
+    [
+        'nombre' => 'Nina',
+        'especie'  => 'Gato',
+        'edad' => 2,
+    ],
+    [
+        'nombre' => 'Iris',
+        'especie'  => 'Ave',
+        'edad' => 1,
+    ],
+    [
+        'nombre' => 'Nemo',
+        'especie'  => 'Pez',
+        'edad' => 3,
+    ],
+    [
+        'nombre' => 'Zeus',
+        'especie'  => 'Perro',
+        'edad' => 5,
+    ],
+    [
+        'nombre' => 'Phoebe',
+        'especie'  => 'Gato',
+        'edad' => 6,
+    ],
+    [
+        'nombre' => 'Oscar',
+        'especie'  => 'Lagarto',
+        'edad' => 2,
+    ],
+    [
+        'nombre' => 'Luis',
+        'especie'  => 'Perro',
+        'edad' => 3,
+    ],
+    [
+        'nombre' => 'Ramon',
+        'especie'  => 'Gato',
+        'edad' => 4,
+    ],
+    [
+        'nombre' => 'Rogelio',
+        'especie'  => 'Pez',
+        'edad' => 1,
+    ],
+];
+
+$perros = 0;
+$gatos = 0;
+$aves = 0;
+$peces = 0;
+$lagartos = 0;
+
+$edadMenor = 0;
+$edadMedia = 0;
+$edadMayor = 0;
+
+foreach ($mascotas as $mascota) {
+
+
+    switch ($mascota['especie']) {
+        case "Perro":
+            $perros += $mascota['edad'];
+            break;
+        case "Gato":
+            $gatos += $mascota['edad'];
+            break;
+        case "Pez":
+            $peces += $mascota['edad'];
+            break;
+        case "Ave":
+            $aves += $mascota['edad'];
+            break;
+        case "Lagarto":
+            $lagartos += $mascota['edad'];
+            break;
+        default:
+            break;
+    }
+
+    if ($mascota['edad'] < 2) {
+        $edadMenor++;
+    } else if ($mascota['edad'] > 2 && $mascota['edad'] < 4) {
+        $edadMedia++;
+    } else {
+        $edadMayor++;
+    }
+}
+
+
+
+echo "Promedio de edad por especie: " . "<br>";
+echo "Aves: " . $aves . "<br>";
+echo "Peces: " . $peces . "<br>";
+echo "Perros: " . $perros . "<br>";
+echo "Gatos: " . $gatos . "<br>";
+echo "Lagartos: " . $lagartos . "<br>" . "<br>";
+
+echo "Número de mascotas por rango de edad: " . "<br>";
+echo "Menos de 2 años: " . $edadMenor . " mascotas <br>";
+echo "2 a 4 años: " . $edadMedia . " mascotas <br>";
+echo "Mayor de 4 años: " . $edadMayor . " mascotas <br>";
